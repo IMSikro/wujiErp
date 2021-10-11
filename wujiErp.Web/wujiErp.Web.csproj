@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<UserSecretsId>5211a9c5-0782-4ddd-8e43-038bff2904a3</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
+	
+	<ItemGroup>
+	  <PackageReference Include="Furion" Version="2.19.1" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.10" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\wujiErp.Model\wujiErp.Model.csproj" />
+	</ItemGroup>
+
+</Project>
