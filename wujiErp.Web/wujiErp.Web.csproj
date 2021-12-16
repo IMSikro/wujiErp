@@ -1,23 +1,33 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 		<UserSecretsId>5211a9c5-0782-4ddd-8e43-038bff2904a3</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	</PropertyGroup>
-	
+
 	<PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591</NoWarn>
 	</PropertyGroup>
-	
+
 	<ItemGroup>
-	  <PackageReference Include="Furion" Version="2.19.1" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.10" />
+	  <Compile Remove="publish\**" />
+	  <Content Remove="publish\**" />
+	  <EmbeddedResource Remove="publish\**" />
+	  <None Remove="publish\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\wujiErp.Model\wujiErp.Model.csproj" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\wujiErp.Migrations\wujiErp.Migrations.csproj" />
 	</ItemGroup>
 
 </Project>

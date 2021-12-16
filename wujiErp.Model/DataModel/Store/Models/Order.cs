@@ -1,27 +1,111 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Furion.DatabaseAccessor;
 
 namespace wujiErp.Model.DataModel.Store.Models
 {
-	public class Order : Entity<int>
+	/// <summary>
+	/// 订单
+	/// </summary>
+	public class Order : Entity<long>
 	{
 		/// <summary>
-		/// 订单号
+		/// 商品外键
 		/// </summary>
 		[Required]
+		[ForeignKey(nameof(Produce))]
+		public long ProductId { get; set; }
+		public virtual Produce Produce { get; set; }
+
+		/// <summary>
+		/// 零售价
+		/// </summary>
+		[Required]
+		public double Price { get; set; }
+
+		/// <summary>
+		/// 成本价
+		/// </summary>
+		[Required]
+		public double CostPrice { get; set; }
+
+		/// <summary>
+		/// 购买数量
+		/// </summary>
+		[Required]
+		public double Num { get; set; }
+
+		/// <summary>
+		/// 总价
+		/// </summary>
+		[Required]
+		public double TotalPrice { get; set; }
+
+		/// <summary>
+		/// 客户外键
+		/// </summary>
+		[Required]
+		[ForeignKey(nameof(Customer))]
+		public long CustomerId { get; set; }
+		public virtual Customer Customer { get; set; }
+
+		/// <summary>
+		/// 非常用地址
+		/// </summary>
+		public string OtherAddr { get; set; }
+
+		/// <summary>
+		/// 快递单号
+		/// </summary>
 		public string OrderCode { get; set; }
 
 		/// <summary>
-		/// 商品名
+		/// 是否售后
 		/// </summary>
-		[Required]
-		public string Name { get; set; }
+		public bool IsAftersale { get; set; } = false;
 
 		/// <summary>
-		/// 数量
+		/// 售后价格
 		/// </summary>
-		[Required,Range(0.00D, double.MaxValue)]
-		public double Num { get; set; }
+		public double AftersalePrice { get; set; } = 0D;
+
+		/// <summary>
+		/// 利润
+		/// </summary>
+		public virtual double Profit
+		{
+			get
+			{
+				var money = Price - CostPrice;
+				if (IsAftersale && AftersalePrice > 0D)
+					money += AftersalePrice;
+				return money;
+			}
+		}
+
+		/// <summary>
+		/// 订单来源
+		/// </summary>
+		[Required]
+		public string OrderFrom { get; set; }
+
+		/// <summary>
+		/// 订单状态
+		/// 0 => 进行中
+		/// 1 => 已完成
+		/// </summary>
+		public int OrderStatus { get; set; }
+
+		/// <summary>
+		/// 备注
+		/// </summary>
+		public string Remark { get; set; }
+
+		public Order()
+		{
+			CreatedTime = DateTimeOffset.Now;
+			UpdatedTime = DateTimeOffset.Now;
+		}
 	}
 }
