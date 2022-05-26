@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -10,11 +10,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Furion" Version="2.20.6" />
-		<PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="2.20.6" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
-		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.3" />
+		<PackageReference Include="FreeSql.DbContext" Version="3.2.640" />
+		<PackageReference Include="FreeSql.Provider.SqlServer" Version="3.2.640" />
+		<PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="3.3.0" />
+		<PackageReference Include="Furion.Pure" Version="3.3.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.5" />
+        <PackageReference Include="prometheus-net.AspNetCore" Version="6.0.0" />
 	</ItemGroup>
 
 </Project>

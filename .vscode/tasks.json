@@ -1,0 +1,69 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish_linux",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj",
+                "/p:Configuration=Release",
+                "/p:OutputPath=publish/linux",
+                "/p:PublishProfile=wujiErp.Web/linux_pub",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish_windows",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj",
+                "/p:Configuration=Release",
+                "/p:publishUrl=publish/win64",
+                "/p:PublishProfile=wujiErp.Web/win64_pub",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

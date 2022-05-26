@@ -1,20 +1,8 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using System.Reflection;
+using wujiErp.Model;
 
-namespace wujiErp.Web
-{
-	public class Program
-	{
-		public static void Main(string[] args)
-		{
-			CreateHostBuilder(args).Build().Run();
-		}
-
-		public static IHostBuilder CreateHostBuilder(string[] args) =>
-			Host.CreateDefaultBuilder(args)
-				.ConfigureWebHostDefaults(webBuilder =>
-				{
-					webBuilder.Inject().UseStartup<Startup>();
-				});
-	}
-}
+var builder = WebApplication.CreateBuilder(args)
+            .AddFreeSqlSetup(typeof(Program).Assembly)
+            .Inject();
+var app = builder.Build();
+app.Run();

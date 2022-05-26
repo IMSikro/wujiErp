@@ -1,26 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Furion;
-using Mapster;
+﻿using Furion;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using wujiErp.Model.DBContext;
+using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Prometheus;
 
 namespace wujiErp.Model
 {
-	public class Startup : AppStartup
+    public class Startup : AppStartup
 	{
-		public void ConfigureServices(IServiceCollection services)
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services/*, IConfiguration configuration*/)
 		{
-			TypeAdapterConfig.GlobalSettings.Default.PreserveReference(true)
-				.AddDestinationTransform(DestinationTransform.EmptyCollectionIfNull);
-
-			services.AddDatabaseAccessor(op =>
-			{
-				op.AddDbPool<WujiContext>();
-			}, "wujiErp.Migrations");
+			//services.AddFreeSqlSetup(configuration, GetType().Assembly);
+			
+			services.AddCorsAccessor();
+			services.AddControllersWithViews()
+				.AddJsonOptions(options => {
+					// 该配置应用于 Swagger 文档生成
+					// Swagger 文档内部默认使用System.Text.Json
+					// 所以加了这段配置
+					options.JsonSerializerOptions.PropertyNamingPolicy = null;
+				})
+				.AddNewtonsoftJson(options =>
+				{
+					options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+					options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+					options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+					options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+				})
+				.AddInjectWithUnifyResult();
 		}
-    }
+
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		{
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+			}
+			else
+			{
+				app.UseExceptionHandler("/Error");
+				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+				app.UseHsts();
+			}
+
+			//app.UseHttpsRedirection();
+			app.UseStaticFiles();
+
+			app.UseRouting();
+			app.UseHttpMetrics();
+			app.UseCorsAccessor();
+
+			app.UseAuthentication();
+			app.UseAuthorization();
+
+			app.UseInject();
+			app.UseUnifyResultStatusCodes();
+
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapMetrics();
+				endpoints.MapControllers();
+			});
+
+		}
+	}
 }
