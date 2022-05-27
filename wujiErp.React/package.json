@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@douyinfe/semi-ui": "^2.0.8",
+    "axios": "^0.27.2",
     "pinyin-match": "^1.2.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",

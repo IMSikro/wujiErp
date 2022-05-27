@@ -191,7 +191,7 @@ class OrderTable extends Component {
                             <Button theme="solid" className="btn_margin_right_8" onClick={() => this.setState({ showEditModal: true })} >添加</Button>
                         </Nav.Header>
                         <Nav.Footer>
-                            <Upload>
+                            <Upload action={wuji.base + '/WJ/Upload/OrderExcel'} >
                                 <Button theme="solid" className="btn_margin_right_8" icon={<IconUpload />}>
                                     点击上传
                                 </Button>
@@ -215,8 +215,8 @@ class OrderTable extends Component {
                                             trigger='blur'
                                         />
                                         <Form.Input
-                                            field="CustomerName"
-                                            label="姓名"
+                                            field="CustomerInfo"
+                                            label="姓名或手机号"
                                             trigger='blur'
                                         />
                                         <Form.Input
@@ -230,7 +230,10 @@ class OrderTable extends Component {
                                             this.fields = { currentPage: 1, ...values, };
                                             this.fetchOrderList();
                                         }}>确认</Button>
-                                        <Button theme="solid" htmlType="reset">清空</Button>
+                                        <Button theme="solid" htmlType="reset" onClick={() => {
+                                            this.fields = { currentPage: 1 };
+                                            this.fetchOrderList();
+                                        }}>清空</Button>
                                     </Nav.Footer>
                                 </Nav>
                             )

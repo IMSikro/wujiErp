@@ -47,7 +47,7 @@
                 "publish",
                 "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj",
                 "/p:Configuration=Release",
-                "/p:publishUrl=publish/win64",
+                "/p:OutputPath=publish/win64",
                 "/p:PublishProfile=wujiErp.Web/win64_pub",
                 "/consoleloggerparameters:NoSummary"
             ],

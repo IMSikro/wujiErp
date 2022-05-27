@@ -2,6 +2,7 @@ import 'reset-css';
 import React, { Component } from 'react';
 import { Button, Layout, Upload } from '@douyinfe/semi-ui';
 import { IconUpload } from '@douyinfe/semi-icons';
+import wuji from '../api/api';
 
 
 export default class Home extends Component {
@@ -11,7 +12,7 @@ export default class Home extends Component {
         return (
             <Content>
 
-                <Upload accept={'video/*'} style={{ marginBottom: 12 }}>
+                <Upload action={wuji.base + '/WJ/Upload/Video'} accept={'video/*'} style={{ marginBottom: 12 }}>
                     <Button icon={<IconUpload />} >
                         上传视频
                     </Button>

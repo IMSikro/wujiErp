@@ -1,7 +1,11 @@
+import axios from 'axios';
+
 // const base = `https://sikro.ml`;
-const base = `http://120.26.200.109:520`;
+const base = `http://120.26.200.109:5210`;
+// const base = `http://localhost:5210`;
 
 let wuji = {};
+wuji.base = base;
 
 function setPropsToParams(props) {
     if (!props)
@@ -16,39 +20,74 @@ function setPropsToParams(props) {
     return paramArrays.join("&");
 }
 
-wuji.getorderlist = async (props) => {
+function get(url) {
+    return new Promise((resolve, reject) => {
+        axios.get(url, {
+            // withCredentials 表示跨域请求时是否需要使用凭证
+            withCredentials: false,    // default
+        }).then(
+            (response) => {
+                resolve(response.data);
+            },
+            (err) => {
+                if (err.Cancel) {
+                    console.log(err);
+                } else {
+                    reject(err);
+                }
+            }
+        ).catch((err) => reject(err));
+    });
+}
+
+function post(url, data) {
+    return new Promise((resolve, reject) => {
+        axios.post(url, {
+            // withCredentials 表示跨域请求时是否需要使用凭证
+            withCredentials: false,    // default
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json'
+            },
+            data
+        }).then(
+            (response) => {
+                resolve(response.data);
+            },
+            (err) => {
+                if (err.Cancel) {
+                    console.log(err);
+                } else {
+                    reject(err);
+                }
+            }
+        ).catch((err) => reject(err));
+    })
+}
+
+wuji.getorderlist = (props) => {
     const paramsStr = setPropsToParams(props);
     const url = `${base}/WJ/Order/GetList?${paramsStr}`;
-    const orderlist = await fetch(url);
-    return await orderlist.json();
+    const orderlist = get(url)
+    return orderlist;
 };
 
-wuji.orderadd = async (data) => {
+wuji.orderadd = (data) => {
     const url = `${base}/WJ/Order/OrderAdd`;
-    const addResult = await fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        // mode: 'cors', // no-cors, *cors, same-origin
-        //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-    });
-    return await addResult.json();
+    const addResult = post(url, data)
+    return addResult;
 };
 
-wuji.getproducelist = async (props) => {
+wuji.getproducelist = (props) => {
     const paramsStr = setPropsToParams(props);
-    const producelist = await fetch(`${base}/WJ/Produce/GetList?${paramsStr}`);
-    return await producelist.json();
+    const producelist = get(`${base}/WJ/Produce/GetList?${paramsStr}`);
+    return producelist;
 };
 
-wuji.getcustomerlist = async (props) => {
+wuji.getcustomerlist = (props) => {
     const paramsStr = setPropsToParams(props);
-    const customerlist = await fetch(`${base}/WJ/Customer/GetList?${paramsStr}`);
-    return await customerlist.json();
+    const customerlist = get(`${base}/WJ/Customer/GetList?${paramsStr}`);
+    return customerlist;
 };
 
 export default wuji;

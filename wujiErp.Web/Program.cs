@@ -1,8 +1,8 @@
-using System.Reflection;
-using wujiErp.Model;
+// using System.Reflection;
+// using wujiErp.Model;
 
-var builder = WebApplication.CreateBuilder(args)
-            .AddFreeSqlSetup(typeof(Program).Assembly)
-            .Inject();
+var builder = WebApplication.CreateBuilder(args);
+// builder.AddFreeSqlSetup(typeof(Program).Assembly)
+builder.Inject();
 var app = builder.Build();
 app.Run();
