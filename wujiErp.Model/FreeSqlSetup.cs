@@ -1,4 +1,5 @@
 ﻿using FreeSql;
+using Furion;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -17,15 +18,18 @@ namespace wujiErp.Model
         /// 添加FreeSql引用
         /// (StartUp调用方法)
         /// </summary>
-        public static void AddFreeSqlSetup(this IServiceCollection services, IConfiguration configuration, Assembly assembly, string dbName = "WujiSqlServerConnString")
+        public static void AddFreeSqlSetup(this IServiceCollection services)
         {
+            var dbName = "WujiSqlServerConnString";
+            var configuration = App.Configuration;
             var freeSql = new FreeSqlBuilder()
                 .UseConnectionString(DataType.SqlServer, configuration.GetConnectionString(dbName))
                 .CreateDatabaseIfNotExists()
                 .UseAutoSyncStructure(true).Build();
             services.AddSingleton(freeSql); // 这边是FreeSqlBuilder用AddSingleton
             services.AddFreeRepository(
-                    assemblies: assembly
+                    filter => { },
+                    App.Assemblies.GetType().Assembly
                 );
         }
 
@@ -33,16 +37,19 @@ namespace wujiErp.Model
         /// 添加FreeSql引用
         /// (.Net6 Program调用方法)
         /// </summary>
-        public static WebApplicationBuilder AddFreeSqlSetup(this WebApplicationBuilder builder, Assembly assembly, string dbName = "WujiSqlServerConnString")
+        public static WebApplicationBuilder AddFreeSqlSetup(this WebApplicationBuilder builder)
         {
+            var dbName = "WujiSqlServerConnString";
             var services = builder.Services;
+            var configuration = builder.Configuration;
             var freeSql = new FreeSqlBuilder()
-                .UseConnectionString(DataType.SqlServer, builder.Configuration.GetConnectionString(dbName))
+                .UseConnectionString(DataType.SqlServer, configuration.GetConnectionString(dbName))
                 .CreateDatabaseIfNotExists()
                 .UseAutoSyncStructure(true).Build();
             services.AddSingleton(freeSql); // 这边是FreeSqlBuilder用AddSingleton
             services.AddFreeRepository(
-                    assemblies: assembly
+                    filter => { },
+                    App.Assemblies.GetType().Assembly
                 );
             return builder;
         }

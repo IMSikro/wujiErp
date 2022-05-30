@@ -13,10 +13,10 @@ namespace wujiErp.Web.Controllers
         private readonly ILogger<CustomerController> _logger;
         public IBaseRepository<Customer> CustomerRepository { get; set; }
 
-        public CustomerController(ILogger<CustomerController> logger, IBaseRepository<Customer> @base)
+        public CustomerController(ILogger<CustomerController> logger, IBaseRepository<Customer> customerRepository)
         {
             _logger = logger;
-            CustomerRepository = @base;
+            CustomerRepository = customerRepository;
         }
 
         /// <summary>
@@ -40,7 +40,9 @@ namespace wujiErp.Web.Controllers
         /// <returns>客户Id</returns>
         public async Task<long> CustomerAdd(Customer customer)
         {
+            var tran = CustomerRepository.UnitOfWork.GetOrBeginTransaction();
             var result = await CustomerRepository.InsertAsync(customer);
+            tran.Commit();
             return result.Id;
         }
 
@@ -51,8 +53,10 @@ namespace wujiErp.Web.Controllers
         /// <returns>客户Id</returns>
         public async Task<long> CustomerUpdate(Customer customer)
         {
+            var tran = CustomerRepository.UnitOfWork.GetOrBeginTransaction();
             customer.UpdatedTime = DateTime.Now;
             var result = await CustomerRepository.UpdateAsync(customer);
+            tran.Commit();
             return result > 0 ? customer.Id : 0;
         }
 

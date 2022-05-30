@@ -13,10 +13,10 @@ namespace wujiErp.Web.Controllers
         private readonly ILogger<ProduceController> _logger;
         public IBaseRepository<Produce> ProduceRepository { get; set; }
 
-        public ProduceController(ILogger<ProduceController> logger, IBaseRepository<Produce> @base)
+        public ProduceController(ILogger<ProduceController> logger, IBaseRepository<Produce> produceRepository)
         {
             _logger = logger;
-            ProduceRepository = @base;
+            ProduceRepository = produceRepository;
         }
 
         /// <summary>
@@ -40,7 +40,9 @@ namespace wujiErp.Web.Controllers
         /// <returns>产品Id</returns>
         public async Task<long> ProduceAdd(Produce Produce)
         {
+            var tran = ProduceRepository.UnitOfWork.GetOrBeginTransaction();
             var result = await ProduceRepository.InsertAsync(Produce);
+            tran.Commit();
             return result.Id;
         }
 
@@ -51,8 +53,10 @@ namespace wujiErp.Web.Controllers
         /// <returns>产品Id</returns>
         public async Task<long> ProduceUpdate(Produce Produce)
         {
+            var tran = ProduceRepository.UnitOfWork.GetOrBeginTransaction();
             Produce.UpdatedTime = DateTime.Now;
             var result = await ProduceRepository.UpdateAsync(Produce);
+            tran.Commit();
             return result > 0 ? Produce.Id : 0;
         }
 
@@ -76,7 +80,9 @@ namespace wujiErp.Web.Controllers
         public async Task<int> ProduceDelete(int? Id)
         {
             if (!Id.HasValue) return 0;
+            var tran = ProduceRepository.UnitOfWork.GetOrBeginTransaction();
             var result = await ProduceRepository.DeleteAsync(wa => wa.Id == Id);
+            tran.Commit();
             return result;
         }
 

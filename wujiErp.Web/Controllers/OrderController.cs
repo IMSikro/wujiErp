@@ -48,6 +48,7 @@ namespace wujiErp.Web.Controllers
         /// <returns>订单Id</returns>
         public async Task<long> OrderAdd(Order order)
         {
+            var tran = OrderRepository.UnitOfWork.GetOrBeginTransaction();
             var result = await OrderRepository.InsertAsync(order);
             var customer = CustomerRepository.Where(wa => wa.Id == order.CustomerId).First();
             if (customer != null)
@@ -55,7 +56,7 @@ namespace wujiErp.Web.Controllers
                 customer.LastOrderTime = order.CreatedTime;
                 await CustomerRepository.UpdateAsync(customer);
             }
-
+            tran.Commit();
             return result.Id;
         }
 
@@ -66,7 +67,9 @@ namespace wujiErp.Web.Controllers
         /// <returns>订单Id</returns>
         public async Task<long> OrderUpdate(Order order)
         {
+            var tran = OrderRepository.UnitOfWork.GetOrBeginTransaction();
             var result = await OrderRepository.UpdateAsync(order);
+            tran.Commit();
             return result > 0 ? order.Id : 0;
         }
 
