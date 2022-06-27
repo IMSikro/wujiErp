@@ -7,8 +7,8 @@
 ## 软件架构
 
     软件架构说明
-    .NET6(ASP.NET Core)
-    React + Semi Design UI(抖音UI框架)
+    后端: .NET6(ASP.NET Core)
+    前端: 暂时使用 React + Semi Design UI(抖音UI框架)
 
 ---
 ## 安装教程

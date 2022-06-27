@@ -1,22 +1,28 @@
 import 'reset-css';
 import React, { Component } from 'react';
+import {
+  Route,
+  useHistory
+} from 'react-router-dom'
 import { Layout, Nav, Avatar } from '@douyinfe/semi-ui';
 import { IconLayers, IconHome, IconMenu, IconUserGroup, IconIndentRight, IconMember } from '@douyinfe/semi-icons';
 
 import '../css/custum.css'
 
 import Home from './Home'
-import Order from './Order'
-import Produce from './Produce'
-import Customer from './Customer'
+// import Order from './Order'
+// import Produce from './Produce'
+// import Customer from './Customer'
+import Order from './Order/Index'
+import Produce from './Produce/Index'
+import Customer from './Customer/Index'
 
 export default class NavApp extends Component {
 
   constructor(props) {
     super(props);
-    const defaultPage = "Order";
 
-    this.state = { items: [], defaultSelectedKeys: [defaultPage], selectedKey: defaultPage };
+    this.state = { items: [] };
   }
 
   componentDidMount() {
@@ -25,39 +31,40 @@ export default class NavApp extends Component {
 
   setStateNavItems() {
     let items = [
-      { itemKey: 'Home', text: '首页', icon: <IconHome size="large" /> },
-      { itemKey: 'Order', text: '订单管理', icon: <IconMenu size="large" /> },
-      { itemKey: 'Customer', text: '客户管理', icon: <IconUserGroup size="large" /> },
-      { itemKey: 'Produce', text: '产品管理', icon: <IconIndentRight size="large" /> },
+      { itemKey: 'Home', text: '首页', link: '/', icon: <IconHome size="large" /> },
+      { itemKey: 'Order', text: '订单管理', link: '/order', icon: <IconMenu size="large" /> },
+      { itemKey: 'Customer', text: '客户管理', link: '/customer', icon: <IconUserGroup size="large" /> },
+      { itemKey: 'Produce', text: '产品管理', link: '/produce', icon: <IconIndentRight size="large" /> },
     ];
     this.setState({ items });
   }
 
-  showItemContent() {
-    if (this.state.selectedKey === 'Home')
-      return (<Home />);
-    if (this.state.selectedKey === 'Order')
-      return (<Order />);
-    if (this.state.selectedKey === 'Customer')
-      return (<Customer />);
-    if (this.state.selectedKey === 'Produce')
-      return (<Produce />);
+  getRouteItems() {
+    return (
+      <>
+        <Route exact path='/' component={Home} />
+        <Route path='/order' component={Order} />
+        <Route path='/customer' component={Customer} />
+        <Route path='/produce' component={Produce} />
+      </>
+    );
   }
 
   render() {
     const { Header, Footer, Sider, Content } = Layout;
-    let { items, defaultSelectedKeys } = this.state;
-    let contents = this.showItemContent();
+    let { items } = this.state;
+    let router = this.getRouteItems();
+
+    let history = useHistory();
+    console.log('history: ', history);
+
     return (
       <Layout style={{ border: '1px solid var(--semi-color-border)' }}>
         <Sider style={{ backgroundColor: 'var(--semi-color-bg-1)' }}>
           <Nav
             style={{ maxWidth: 220, height: '100%' }}
-            defaultSelectedKeys={defaultSelectedKeys}
+            // defaultSelectedKeys={defaultSelectedKeys}
             items={items}
-            onSelect={key => {
-              this.setState({ selectedKey: key.itemKey });
-            }}
             footer={{
               collapseButton: true,
             }}
@@ -92,7 +99,7 @@ export default class NavApp extends Component {
             </Nav>
           </Header>
           <Content className="minHeight800">
-            {contents}
+            {router}
           </Content>
           <Footer
             style={{
