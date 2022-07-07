@@ -1,0 +1,65 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: 生成React并打包
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.15.1]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+      - name: 拷贝项目
+        uses: actions/checkout@v3
+
+      - name: 环境
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 构建git仓库
+        run: |
+          mkdir -p ${{ github.workspace }}/build/
+          cd ${{ github.workspace }}/build
+          echo 'www.wuji.cf' >> CNAME
+          /usr/bin/git init
+          /usr/bin/git config --global user.name "SikroYang"
+          /usr/bin/git config --global user.email "yxx95lz@163.com"
+          /usr/bin/git remote add origin git@github.com:IMSikro/wujiErp.build.git
+
+      - name: 生成
+        run: |
+          cd ${{ github.workspace }}/wujiErp.React && yarn && yarn build
+          
+      - name: 拷贝生成文件
+        run: |
+          cp -rf ${{ github.workspace }}/wujiErp.React/build/* ${{ github.workspace }}/build/
+          tree ${{ github.workspace }}/build
+
+      - name: 推送到github page
+        run: |
+          mkdir -p /home/runner/.ssh/
+          echo '${{ secrets.PRIVATE_KEY }}' >> /home/runner/.ssh/id_rsa
+          chmod 400 /home/runner/.ssh/id_rsa
+          eval `ssh-agent -s`
+          ssh-add /home/runner/.ssh/id_rsa
+          ssh-add -l
+          # ssh -T git@github.com
+          cd ${{ github.workspace }}/build
+          /usr/bin/git add .
+          /usr/bin/git commit -m 'first commit'
+          /usr/bin/git push -f origin master
+
+      # - name: 上传
+      #   uses: actions/upload-artifact@v3.1.0
+      #   with:
+      #     name: wuji
+      #     path: ${{ github.workspace }}/build/*
