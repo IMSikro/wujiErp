@@ -1,5 +1,3 @@
-using System;
-
 namespace wujiErp.Web.Models
 {
 	public class ErrorViewModel

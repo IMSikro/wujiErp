@@ -1,6 +1,6 @@
 import { Layout, Nav, Avatar } from '@douyinfe/semi-ui';
 import { IconLayers, IconMember } from '@douyinfe/semi-icons';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Content from '../Content/Index'
 import AppRoutes, { GetRouter } from '../Routes/Index';
 
@@ -17,6 +17,10 @@ function Sider() {
             itemkey = location.pathname.substring(1);
     }
 
+    const navigate = useNavigate();
+
+
+
     return (
         <Layout style={{ border: '1px solid var(--semi-color-border)' }}>
             <Sider style={{ backgroundColor: 'var(--semi-color-bg-1)' }}>
@@ -24,6 +28,17 @@ function Sider() {
                     style={{ maxWidth: 220, height: '100%' }}
                     items={items}
                     selectedKeys={[itemkey]}
+                    onClick={({ itemKey }) => {
+                        let path;
+                        switch (itemKey) {
+                            case 'home':
+                                path = '/';
+                                break;
+                            default:
+                                path = `/${itemKey}`;
+                        }
+                        navigate(path);
+                    }}
                     footer={{
                         collapseButton: true,
                     }}
