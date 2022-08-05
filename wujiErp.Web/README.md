@@ -7,8 +7,9 @@ add-migration [Name]		#创建迁移
 
 update-database [Name]		#应用迁移
 
-
 script-migration [Name]		#生成迁移脚本
+
+enable-migrations –EnableAutomaticMigration:$true #配置自动迁移
 ```
 
 

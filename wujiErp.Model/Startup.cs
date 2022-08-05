@@ -1,6 +1,8 @@
-﻿using Furion;
+﻿using System.IO;
+using Furion;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -52,6 +54,7 @@ namespace wujiErp.Model
             }
 
             //app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -66,8 +69,18 @@ namespace wujiErp.Model
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapMetrics();
+                endpoints.MapMetrics("/wujierp/metrics");
                 endpoints.MapControllers();
+                endpoints.MapFallback(async (context) =>
+                {
+                    var phpath = Path.Join(env.WebRootPath, context.Request.Path);
+                    var name = Path.Combine(Path.GetDirectoryName(phpath)!, "index.html");
+                    if (File.Exists(name))
+                    {
+                        context.Response.StatusCode = 200;
+                        await context.Response.SendFileAsync(name);
+                    }
+                });
             });
 
         }

@@ -6,17 +6,22 @@
         {
             "label": "yarn: install",
             "type": "shell",
-            "command": "yarn install"
+            "command": "yarn"
         },
         {
-            "label": "yarn: start",
+            "label": "yarn: dev",
             "type": "shell",
-            "command": "yarn start"
+            "command": "yarn && yarn dev"
         },
         {
             "label": "yarn: build",
             "type": "shell",
-            "command": "yarn build"
+            "command": "yarn && yarn build"
+        },
+        {
+            "label": "yarn: start",
+            "type": "shell",
+            "command": "yarn && yarn build && yarn preview"
         }
     ]
 }

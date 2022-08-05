@@ -36,13 +36,17 @@ jobs:
           /usr/bin/git remote add origin git@github.com:IMSikro/wujiErp.build.git
 
       - name: 生成
+        env: 
+          VITE_API_URL: http://120.26.200.109:5210
         run: |
-          cd ${{ github.workspace }}/wujiErp.React && yarn && yarn build
+          cd ${{ github.workspace }}/wujiErp.React
+          yarn
+          yarn build
           
       - name: 拷贝生成文件
         run: |
           cp -rf ${{ github.workspace }}/wujiErp.React/build/* ${{ github.workspace }}/build/
-          tree ${{ github.workspace }}/build
+          # tree ${{ github.workspace }}/build
 
       - name: 推送到github page
         run: |

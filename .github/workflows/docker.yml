@@ -1,0 +1,67 @@
+name: 生成并发布Docker Image
+
+# refer to https://github.com/actions/starter-workflows/blob/main/ci/docker-publish.yml 
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - master
+
+env:
+  # <repo>
+  IMAGE_NAME: wujierp
+  LATEST_TAG: latest
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拷贝项目
+        uses: actions/checkout@v3
+
+      - name: 获取北京时间
+        id: time
+        uses: nanzm/get-time-action@v1.1
+        with:
+          timeZone: 8
+          format: 'YY.MMDDHHmm'
+
+      - name: 设置变量
+        id: set-env
+        env:
+          IMAGE_FULLNAME: ${{ secrets.DOCKER_HUB_USER }}/${{ env.IMAGE_NAME  }}
+        run: |
+          echo IMAGE_FULLNAME=$(echo ${{ env.IMAGE_FULLNAME }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+          echo VERSION_TAG=$(echo ${{ env.IMAGE_FULLNAME }}:v${{ steps.time.outputs.time }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+          echo LATEST_TAG=$(echo ${{ env.IMAGE_FULLNAME }}:${{ env.LATEST_TAG  }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+
+      # Login against a Docker registry except on PR
+      # https://github.com/docker/login-action
+      - name: 登录到 DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: 生成并上传Docker image
+        run: |
+          # docker version
+          # docker info
+          # docker-compose version
+          docker build -t ${{ env.VERSION_TAG }} -t ${{ env.LATEST_TAG }} .
+          docker push -a ${{ env.IMAGE_FULLNAME }}
+
+      # # Build and push Docker image with Buildx (don't push on PR)
+      # # https://github.com/docker/build-push-action
+      # - name: 生成并上传Docker image
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     context: .
+      #     push: ${{ github.event_name != 'pull_request' }}
+      #     tags: |
+      #       ${{ env.VERSION_TAG }}
+      #       ${{ env.LATEST_TAG }}

@@ -1,0 +1,41 @@
+version: '3'
+
+networks:
+    nginx:
+        name: nginx
+        driver: bridge
+
+services:
+    wujierp:
+        image: sikro/wujierp:latest
+        container_name: wujierp
+        restart: always
+        ports:
+            - 5210:5210
+        networks:
+            nginx:
+                aliases:
+                    - wujierp
+
+    # wujierp:
+    #     build:
+    #         context: .
+    #         dockerfile: Dockerfile-node
+    #     image: sikro/wujierp:latest
+    #     container_name: wujierp
+    #     restart: always
+    #     environment:
+    #         NODE_ENV: production
+    #         VITE_API_URL: 'http://120.26.200.109:5210'
+    #         VITE_PORT: 80
+    #     ports:
+    #         - 5211:80
+    #     working_dir: /wuji/wujiErp.React
+    #     # entrypoint: ["yarn","dev"]
+    #     entrypoint: ["yarn","preview"]
+    #     networks:
+    #         nginx:
+    #             aliases:
+    #                 - wujierp
+    #     depends_on:
+    #         - wujiapi

@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 // const base = `https://sikro.ml`;
-const base = `http://120.26.200.109:5210`;
+// const base = `http://120.26.200.109:5210`;
 // const base = `http://localhost:5210`;
+const base = import.meta.env.VITE_API_URL || '';
 
 let wuji = {};
 wuji.base = base;

@@ -1,0 +1,9 @@
+# FROM node:lts-bullseye as build
+# WORKDIR /wuji
+# ENV VITE_PORT=80
+# ENV VITE_API_URL=http://120.26.200.109:5210
+# EXPOSE 80
+# COPY ["wujiErp.React/","wujiErp.React/"]
+# WORKDIR "/wuji/wujiErp.React"
+# RUN yarn && yarn build
+# RUN yarn

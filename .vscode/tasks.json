@@ -14,46 +14,6 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "publish",
-                "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "publish_linux",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "publish",
-                "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj",
-                "/p:Configuration=Release",
-                "/p:OutputPath=publish/linux",
-                "/p:PublishProfile=wujiErp.Web/linux_pub",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "publish_windows",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "publish",
-                "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj",
-                "/p:Configuration=Release",
-                "/p:OutputPath=publish/win64",
-                "/p:PublishProfile=wujiErp.Web/win64_pub",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
             "label": "watch",
             "command": "dotnet",
             "type": "process",
@@ -64,6 +24,46 @@
                 "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "dotnet_publish",
+            "type": "shell",
+            "command": "cd ./wujiErp.Web && rm -r -fo ./publish/wuji && dotnet publish wujiErp.Web.csproj -c Release -o publish/wuji/"
+        },
+        {
+            "label": "dotnet_run",
+            "type": "shell",
+            "command": "cd ./wujiErp.Web/publish/wuji/ && dotnet wujiErp.Web.dll"
+        },
+        {
+            "label": "yarn: install",
+            "type": "shell",
+            "command": "cd ./wujiErp.React && yarn"
+        },
+        {
+            "label": "yarn: dev",
+            "type": "shell",
+            "command": "cd ./wujiErp.React && yarn && yarn dev"
+        },
+        {
+            "label": "yarn: build",
+            "type": "shell",
+            "command": "cd ./wujiErp.React && yarn && yarn build"
+        },
+        {
+            "label": "yarn: copy",
+            "type": "shell",
+            "command": "cp -r -fo ${workspaceFolder}/wujiErp.React/build/* ${workspaceFolder}/wujiErp.Web/publish/wuji/wwwroot/"
+        },
+        {
+            "label": "yarn: build&copy",
+            "type": "shell",
+            "command": "cd ./wujiErp.React && yarn && yarn build && cp -r -fo ${workspaceFolder}/wujiErp.React/build/* ${workspaceFolder}/wujiErp.Web/publish/wuji/wwwroot/"
+        },
+        {
+            "label": "yarn: start",
+            "type": "shell",
+            "command": "cd ./wujiErp.React && yarn && yarn build && yarn preview"
         }
     ]
 }
