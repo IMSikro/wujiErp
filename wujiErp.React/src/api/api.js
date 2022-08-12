@@ -8,24 +8,12 @@ const base = import.meta.env.VITE_API_URL || '';
 let wuji = {};
 wuji.base = base;
 
-function setPropsToParams(props) {
-    if (!props)
-        return "";
-    var paramArrays = [];
-    for (const key in props) {
-        if (Object.hasOwnProperty.call(props, key)) {
-            const element = props[key];
-            paramArrays.push(`${key}=${element}`);
-        }
-    }
-    return paramArrays.join("&");
-}
-
-function get(url) {
+function get(url, params) {
     return new Promise((resolve, reject) => {
         axios.get(url, {
             // withCredentials 表示跨域请求时是否需要使用凭证
             withCredentials: false,    // default
+            params
         }).then(
             (response) => {
                 resolve(response.data);
@@ -66,10 +54,9 @@ function post(url, data) {
     })
 }
 
-wuji.getorderlist = (props) => {
-    const paramsStr = setPropsToParams(props);
-    const url = `${base}/WJ/Order/GetList?${paramsStr}`;
-    const orderlist = get(url)
+wuji.getorderlist = (params) => {
+    const url = `${base}/WJ/Order/GetList`;
+    const orderlist = get(url, params)
     return orderlist;
 };
 
@@ -79,15 +66,13 @@ wuji.orderadd = (data) => {
     return addResult;
 };
 
-wuji.getproducelist = (props) => {
-    const paramsStr = setPropsToParams(props);
-    const producelist = get(`${base}/WJ/Produce/GetList?${paramsStr}`);
+wuji.getproducelist = (params) => {
+    const producelist = get(`${base}/WJ/Produce/GetList`, params);
     return producelist;
 };
 
-wuji.getcustomerlist = (props) => {
-    const paramsStr = setPropsToParams(props);
-    const customerlist = get(`${base}/WJ/Customer/GetList?${paramsStr}`);
+wuji.getcustomerlist = (params) => {
+    const customerlist = get(`${base}/WJ/Customer/GetList`, params);
     return customerlist;
 };
 
