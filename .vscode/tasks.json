@@ -7,11 +7,17 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
-            "problemMatcher": "$msCompile"
+            "options": {
+                "cwd": "wujiErp.Web"
+            },
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         },
         {
             "label": "watch",
@@ -19,51 +25,76 @@
             "type": "process",
             "args": [
                 "watch",
-                "run",
-                "--project",
-                "${workspaceFolder}/wujiErp.Web/wujiErp.Web.csproj"
+                "run"
             ],
+            "options": {
+                "cwd": "wujiErp.Web"
+            },
             "problemMatcher": "$msCompile"
         },
         {
             "label": "dotnet_publish",
             "type": "shell",
-            "command": "cd ./wujiErp.Web && rm -r -fo ./publish/wuji && dotnet publish wujiErp.Web.csproj -c Release -o publish/wuji/"
+            "command": "rm -r -fo ./publish/wuji && dotnet publish wujiErp.Web.csproj -c Release -o publish/wuji/",
+            "options": {
+                "cwd": "wujiErp.Web"
+            }
         },
         {
             "label": "dotnet_run",
             "type": "shell",
-            "command": "cd ./wujiErp.Web/publish/wuji/ && dotnet wujiErp.Web.dll"
+            "command": "dotnet run",
+            "options": {
+                "cwd": "wujiErp.Web"
+            }
         },
         {
             "label": "yarn: install",
             "type": "shell",
-            "command": "cd ./wujiErp.React && yarn"
+            "command": "yarn",
+            "options": {
+                "cwd": "wujiErp.React"
+            }
         },
         {
             "label": "yarn: dev",
             "type": "shell",
-            "command": "cd ./wujiErp.React && yarn && yarn dev"
+            "command": "yarn && yarn dev",
+            "options": {
+                "cwd": "wujiErp.React"
+            }
         },
         {
             "label": "yarn: build",
             "type": "shell",
-            "command": "cd ./wujiErp.React && yarn && yarn build"
+            "command": "yarn && yarn build",
+            "options": {
+                "cwd": "wujiErp.React"
+            }
         },
         {
             "label": "yarn: copy",
             "type": "shell",
-            "command": "cp -r -fo ${workspaceFolder}/wujiErp.React/build/* ${workspaceFolder}/wujiErp.Web/publish/wuji/wwwroot/"
+            "command": "cp -r -fo ./build/* ${workspaceFolder}/wujiErp.Web/wwwroot/Erp/Wuji/",
+            "options": {
+                "cwd": "wujiErp.React"
+            }
         },
         {
             "label": "yarn: build&copy",
             "type": "shell",
-            "command": "cd ./wujiErp.React && yarn && yarn build && cp -r -fo ${workspaceFolder}/wujiErp.React/build/* ${workspaceFolder}/wujiErp.Web/publish/wuji/wwwroot/"
+            "command": "yarn && yarn build && cp -r -fo ./build/* ${workspaceFolder}/wujiErp.Web/publish/wuji/wwwroot/Erp/Wuji/",
+            "options": {
+                "cwd": "wujiErp.React"
+            }
         },
         {
             "label": "yarn: start",
             "type": "shell",
-            "command": "cd ./wujiErp.React && yarn && yarn build && yarn preview"
+            "command": "yarn && yarn build && yarn preview",
+            "options": {
+                "cwd": "wujiErp.React"
+            }
         }
     ]
 }

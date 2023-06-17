@@ -23,6 +23,6 @@ ENV ASPNETCORE_URLS=http://0.0.0.0:5210
 ENV TZ=Asia/Shanghai
 
 COPY --from=publish /publish/wuji .
-COPY --from=build /wuji/wujiErp.React/build ./wwwroot
+COPY --from=build /wuji/wujiErp.React/build ./wwwroot/Erp/Wuji/
 RUN cp -rf /usr/share/zoneinfo/${TZ} /etc/localtime && echo "${TZ}" > /etc/timezone
 ENTRYPOINT ["dotnet", "wujiErp.Web.dll"]

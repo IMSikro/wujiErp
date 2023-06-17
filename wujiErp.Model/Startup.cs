@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Threading.Tasks;
+using System.IO;
 using Furion;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -73,16 +74,22 @@ namespace wujiErp.Model
                 endpoints.MapControllers();
                 endpoints.MapFallback(async (context) =>
                 {
-                    var phpath = Path.Join(env.WebRootPath, context.Request.Path);
-                    var name = Path.Combine(Path.GetDirectoryName(phpath)!, "index.html");
-                    if (File.Exists(name))
+                    if (context.Request.Path.ToString().ToLower().StartsWith("/erp/wuji"))
                     {
-                        context.Response.StatusCode = 200;
-                        await context.Response.SendFileAsync(name);
+                        var phpath = Path.Join(env.WebRootPath, context.Request.Path);
+                        var name = Path.Combine(Path.GetDirectoryName(phpath)!, "index.html");
+                        if (File.Exists(name))
+                        {
+                            context.Response.StatusCode = 200;
+                            await context.Response.SendFileAsync(name);
+                        }
+                    }
+                    else
+                    {
+                        context.Response.Redirect("/Erp/Wuji");
                     }
                 });
             });
-
         }
     }
 }

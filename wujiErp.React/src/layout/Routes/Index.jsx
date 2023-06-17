@@ -7,14 +7,15 @@ import Customer from '../../pages/Customer/Index';
 import Produce from '../../pages/Produce/Index';
 
 export function GetRouter() {
+    const base = "/Erp/Wuji/"
     let routes = [
         // path,element为路由字段
         // itemKey,text,icon为 Nav 菜单字段
-        { path: "/", element: <Home />, itemKey: 'home', text: '首页', icon: <IconHome size="large" /> },
-        { path: "/order", element: <Order />, itemKey: 'order', text: '订单管理', icon: <IconMenu size="large" /> },
-        { path: "/customer", element: <Customer />, itemKey: 'customer', text: '客户管理', icon: <IconUserGroup size="large" /> },
-        { path: "/produce", element: <Produce />, itemKey: 'produce', text: '产品管理', icon: <IconIndentRight size="large" /> },
-        { path: "/about", element: <About />, itemKey: 'about', text: '关于', icon: <IconHistogram size="large" /> },
+        { path: base, element: <Home />, itemKey: 'home', text: '首页', icon: <IconHome size="large" /> },
+        { path: base + "order", element: <Order />, itemKey: 'order', text: '订单管理', icon: <IconMenu size="large" /> },
+        { path: base + "customer", element: <Customer />, itemKey: 'customer', text: '客户管理', icon: <IconUserGroup size="large" /> },
+        { path: base + "produce", element: <Produce />, itemKey: 'produce', text: '产品管理', icon: <IconIndentRight size="large" /> },
+        { path: base + "about", element: <About />, itemKey: 'about', text: '关于', icon: <IconHistogram size="large" /> },
         // ...
     ];
     return routes;

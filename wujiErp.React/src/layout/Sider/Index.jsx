@@ -9,12 +9,14 @@ function Sider() {
     let location = useLocation();
     let items = GetRouter();
     let itemkey;
-    switch (location.pathname) {
-        case '/':
+    var path = location.pathname.toLowerCase().replace('/erp/wuji/', '');
+    // console.log(location.pathname, path);
+    switch (path) {
+        case '':
             itemkey = 'home';
             break;
         default:
-            itemkey = location.pathname.substring(1);
+            itemkey = path;
     }
 
     const navigate = useNavigate();
@@ -29,14 +31,7 @@ function Sider() {
                     items={items}
                     selectedKeys={[itemkey]}
                     onClick={({ itemKey }) => {
-                        let path;
-                        switch (itemKey) {
-                            case 'home':
-                                path = '/';
-                                break;
-                            default:
-                                path = `/${itemKey}`;
-                        }
+                        let path = items.find(i => i.itemKey == itemKey).path;
                         navigate(path);
                     }}
                     footer={{
