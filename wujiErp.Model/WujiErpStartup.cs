@@ -2,7 +2,7 @@ using Furion;
 using Furion.DatabaseAccessor;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace wujiErp.ModelConfigration;
+namespace wujiErp.Model;
 
 public sealed class WujiStartup : AppStartup
 {
@@ -16,6 +16,6 @@ public sealed class WujiStartup : AppStartup
 
             // 配置多个数据库，多个数据库必须指定数据库上下文定位器
             //  options.AddDbPool<SqliteDbContext, SqliteDbContextLocaotr>();
-        }, "wujiErp.ModelConfigration");
+        }, "wujiErp.Model");
     }
 }

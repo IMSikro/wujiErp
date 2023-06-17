@@ -17,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\wujiErp.ModelConfigration\wujiErp.ModelConfigration.csproj" />
+	  <ProjectReference Include="..\wujiErp.Model\wujiErp.Model.csproj" />
 	</ItemGroup>
 
 </Project>
