@@ -1,17 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-	</PropertyGroup>
-	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="FreeSql.DbContext" Version="3.2.665"/>
-		<PackageReference Include="FreeSql.Provider.SqlServer" Version="3.2.665"/>
-		<PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="3.8.6"/>
-		<PackageReference Include="Furion.Pure" Version="3.8.6"/>
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7"/>
-		<PackageReference Include="prometheus-net.AspNetCore" Version="6.0.0"/>
+		<PackageReference Include="Furion" Version="4.8.8.25" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.7" />
+		<PackageReference Include="prometheus-net.AspNetCore" Version="8.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.7" />
 	</ItemGroup>
 </Project>
