@@ -1,13 +1,26 @@
 ﻿using System;
+using Furion.DatabaseAccessor;
 
 namespace wujiErp.Model.DataModel.Store.Models;
 
 /// <summary>
 /// 产品
 /// </summary>
-public class Produce
+public class Produce : Entity<long>
 {
-    public long Id { get; set; }
+    /// <summary>
+    /// 是否逻辑删除
+    /// </summary>
+    public bool IsDeleted { get; set; }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public Produce()
+    {
+        CreatedTime = DateTime.Now;
+        IsDeleted = false;
+    }
 
     /// <summary>
     /// 商品名
@@ -49,18 +62,4 @@ public class Produce
     /// </summary>
     public string Remark { get; set; }
 
-    /// <summary>
-    /// 创建时间
-    /// </summary>
-    public DateTime CreatedTime { get; set; }
-
-    /// <summary>
-    /// 修改时间
-    /// </summary>
-    public DateTime? UpdatedTime { get; set; }
-
-    public Produce()
-    {
-        CreatedTime = DateTime.Now;
-    }
 }

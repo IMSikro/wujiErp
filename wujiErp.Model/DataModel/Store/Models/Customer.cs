@@ -1,13 +1,18 @@
 ﻿using System;
+using Furion.DatabaseAccessor;
 
 namespace wujiErp.Model.DataModel.Store.Models;
 
 /// <summary>
 /// 客户
 /// </summary>
-public class Customer
+public class Customer : Entity<long>
 {
-    public long Id { get; set; }
+    /// <summary>
+    /// 是否逻辑删除
+    /// </summary>
+    public bool IsDeleted { get; set; }
+
     /// <summary>
     /// 姓名
     /// </summary>
@@ -44,17 +49,11 @@ public class Customer
     public DateTime? LastOrderTime { get; set; }
 
     /// <summary>
-    /// 创建时间
+    /// 构造函数
     /// </summary>
-    public DateTime CreatedTime { get; set; }
-
-    /// <summary>
-    /// 修改时间
-    /// </summary>
-    public DateTime? UpdatedTime { get; set; }
-
     public Customer()
     {
         CreatedTime = DateTime.Now;
+        IsDeleted = false;
     }
 }

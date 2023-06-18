@@ -6,10 +6,22 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Furion" Version="4.8.8.25" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.7" />
-		<PackageReference Include="prometheus-net.AspNetCore" Version="8.0.0" />
+		<PackageReference Include="Furion.Extras.ObjectMapper.Mapster" Version="4.8.8.25" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.7" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.7" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.7" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.7" />
+		<PackageReference Include="prometheus-net.AspNetCore" Version="8.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="openApi.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="sqlConnStr.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="sqlConnStr.Development.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 </Project>

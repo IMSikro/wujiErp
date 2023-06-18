@@ -49,6 +49,36 @@
             }
         },
         {
+            "label": "dotnet_add_migrations",
+            "type": "shell",
+            "command": "dotnet",
+            "args": [
+                "ef",
+                "-s",
+                "../wujiErp.Web/",
+                "migrations",
+                "add",
+                "Init",
+            ],
+            "options": {
+                "cwd": "wujiErp.Model"
+            }
+        },
+        {
+            "label": "dotnet_update_database",
+            "command": "dotnet",
+            "args": [
+                "ef",
+                "-s",
+                "../wujiErp.Web/",
+                "database",
+                "update",
+            ],
+            "options": {
+                "cwd": "wujiErp.Model"
+            }
+        },
+        {
             "label": "yarn: install",
             "type": "shell",
             "command": "yarn",

@@ -1,13 +1,17 @@
 using Furion;
 using Furion.DatabaseAccessor;
+using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace wujiErp.Model;
 
+[AppStartup(100)]
 public sealed class WujiStartup : AppStartup
 {
     public void ConfigureServices(IServiceCollection services)
     {
+        TypeAdapterConfig.GlobalSettings.Default.PreserveReference(true)
+                .AddDestinationTransform(DestinationTransform.EmptyCollectionIfNull);
         // 配置数据库上下文，支持N个数据库
         services.AddDatabaseAccessor(options =>
         {
