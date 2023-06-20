@@ -1,18 +1,17 @@
-﻿using System;
+﻿using System.Runtime.CompilerServices;
+using System.ComponentModel.DataAnnotations;
+using System;
 using Furion.DatabaseAccessor;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace wujiErp.Model.DataModel.Store.Models;
 
 /// <summary>
 /// 客户
 /// </summary>
-public class Customer : Entity<long>
+public class Customer : BaseEntity, IEntitySeedData<Customer>
 {
-    /// <summary>
-    /// 是否逻辑删除
-    /// </summary>
-    public bool IsDeleted { get; set; }
-
     /// <summary>
     /// 姓名
     /// </summary>
@@ -53,7 +52,25 @@ public class Customer : Entity<long>
     /// </summary>
     public Customer()
     {
-        CreatedTime = DateTime.Now;
+        CreatedTime = DateTime.UtcNow;
         IsDeleted = false;
+    }
+
+    // 配置种子数据
+    public IEnumerable<Customer> HasData(DbContext dbContext, Type dbContextLocator)
+    {
+        return new List<Customer>
+        {
+            new Customer {
+                Id = 1,
+                Name = "张文静",
+                Phone = "13952401683",
+                Addr = "江苏省苏州市姑苏区东汇路187号 2-103",
+                WhereFrom = "微信",
+                WechatCode="violame",
+                Love="水果",
+                LastOrderTime = DateTime.UtcNow
+            },
+        };
     }
 }

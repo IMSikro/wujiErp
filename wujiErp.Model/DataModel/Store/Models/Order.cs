@@ -1,22 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using Furion.DatabaseAccessor;
+using Microsoft.EntityFrameworkCore;
 
 namespace wujiErp.Model.DataModel.Store.Models;
 
 /// <summary>
 /// 订单
 /// </summary>
-public class Order : Entity<long>
+public class Order : BaseEntity, IEntitySeedData<Order>
 {
-    /// <summary>
-    /// 是否逻辑删除
-    /// </summary>
-    public bool IsDeleted { get; set; }
 
     /// <summary>
     /// 商品外键
     /// </summary>
-    public long ProductId { get; set; }
+    public int ProduceId { get; set; }
 
     public virtual Produce Produce { get; set; }
 
@@ -43,7 +41,7 @@ public class Order : Entity<long>
     /// <summary>
     /// 客户外键
     /// </summary>
-    public long CustomerId { get; set; }
+    public int CustomerId { get; set; }
 
     public virtual Customer Customer { get; set; }
 
@@ -100,7 +98,32 @@ public class Order : Entity<long>
 
     public Order()
     {
-        CreatedTime = DateTime.Now;
+        CreatedTime = DateTime.UtcNow;
         IsDeleted = false;
+    }
+
+
+    // 配置种子数据
+    public IEnumerable<Order> HasData(DbContext dbContext, Type dbContextLocator)
+    {
+        return new List<Order>
+        {
+            new Order {
+                Id = 1,
+                ProduceId = 1,
+                Price = 50D,
+                CostPrice = 15D,
+                Num = 1,
+                TotalPrice = 50D,
+                CustomerId = 1,
+                OtherAddr = "",
+                OrderCode = "SF15645648951516554",
+                IsAftersale = false,
+                AftersalePrice = 0D,
+                OrderFrom = "微信",
+                OrderStatus = 1,
+                Remark = "好评"
+            },
+        };
     }
 }

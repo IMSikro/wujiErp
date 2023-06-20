@@ -1,27 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using Furion.DatabaseAccessor;
+using Microsoft.EntityFrameworkCore;
 
 namespace wujiErp.Model.DataModel.Store.Models;
 
 /// <summary>
 /// 产品
 /// </summary>
-public class Produce : Entity<long>
+public class Produce : BaseEntity, IEntitySeedData<Produce>
 {
-    /// <summary>
-    /// 是否逻辑删除
-    /// </summary>
-    public bool IsDeleted { get; set; }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public Produce()
-    {
-        CreatedTime = DateTime.Now;
-        IsDeleted = false;
-    }
-
     /// <summary>
     /// 商品名
     /// </summary>
@@ -62,4 +50,32 @@ public class Produce : Entity<long>
     /// </summary>
     public string Remark { get; set; }
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public Produce()
+    {
+        CreatedTime = DateTime.UtcNow;
+        IsDeleted = false;
+    }
+
+
+    // 配置种子数据
+    public IEnumerable<Produce> HasData(DbContext dbContext, Type dbContextLocator)
+    {
+        return new List<Produce>
+        {
+            new Produce {
+                Id = 1,
+                Name = "昭通丑苹果",
+                Norm = "5斤大果",
+                Delivery = "德邦物流",
+                Source = "云南昭通",
+                Price = 50D,
+                CostPrice = 15D,
+                LastPrice = 50D,
+                Remark = "又甜又脆很好吃"
+            },
+        };
+    }
 }

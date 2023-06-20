@@ -58,10 +58,10 @@
                 "../wujiErp.Web/",
                 "migrations",
                 "add",
-                "Init",
+                "Init"
             ],
             "options": {
-                "cwd": "wujiErp.Model"
+                "cwd": "wujiErp.ModelMigragions"
             }
         },
         {
@@ -72,11 +72,14 @@
                 "-s",
                 "../wujiErp.Web/",
                 "database",
-                "update",
+                "update"
             ],
             "options": {
-                "cwd": "wujiErp.Model"
-            }
+                "cwd": "wujiErp.ModelMigragions"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
         },
         {
             "label": "yarn: install",
@@ -89,7 +92,7 @@
         {
             "label": "yarn: dev",
             "type": "shell",
-            "command": "yarn && yarn dev",
+            "command": "yarn | yarn dev",
             "options": {
                 "cwd": "wujiErp.React"
             }
@@ -124,6 +127,17 @@
             "command": "yarn && yarn build && yarn preview",
             "options": {
                 "cwd": "wujiErp.React"
+            }
+        },
+        {
+            "label": "start",
+            "dependsOn": [
+                "dotnet_run",
+                "yarn: dev"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         }
     ]

@@ -1,27 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-		<UserSecretsId>5211a9c5-0782-4ddd-8e43-038bff2904a3</UserSecretsId>
-		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<NoWarn>$(NoWarn);1591</NoWarn>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>5211a9c5-0782-4ddd-8e43-038bff2904a3</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<Compile Remove="publish\**" />
-		<Content Remove="publish\**" />
-		<EmbeddedResource Remove="publish\**" />
-		<None Remove="publish\**" />
-	</ItemGroup>
+  <ItemGroup>
+    <Compile Remove="publish\**" />
+    <Content Remove="publish\**" />
+    <EmbeddedResource Remove="publish\**" />
+    <None Remove="publish\**" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\wujiErp.Model\wujiErp.Model.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.7" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.7" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\wujiErp.ModelMigragions\wujiErp.ModelMigragions.csproj" />
+  </ItemGroup>
 
 </Project>
