@@ -7,7 +7,7 @@ import Customer from '../../pages/Customer/Index';
 import Produce from '../../pages/Produce/Index';
 
 export function GetRouter() {
-    const base = "/Erp/Wuji/"
+    const base = import.meta.env.VITE_ROUTER_BASE || '/' //"/Erp/Wuji/"
     let routes = [
         // path,element为路由字段
         // itemKey,text,icon为 Nav 菜单字段

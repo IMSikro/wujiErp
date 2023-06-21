@@ -9,7 +9,9 @@ function Sider() {
     let location = useLocation();
     let items = GetRouter();
     let itemkey;
-    var path = location.pathname.toLowerCase().replace('/erp/wuji/', '');
+    let baseUrlEnv = import.meta.env.VITE_ROUTER_BASE || '/';
+    var path = location.pathname.toLowerCase().replace(baseUrlEnv.toLowerCase(), '');
+    // console.log(import.meta.env);
     // console.log(location.pathname, path);
     switch (path) {
         case '':

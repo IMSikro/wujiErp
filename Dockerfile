@@ -1,14 +1,14 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0.7-alpine3.18 AS base
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS publish
-WORKDIR /publish
+FROM mcr.microsoft.com/dotnet/sdk:7.0.304-alpine3.18 AS publish
+WORKDIR /wuji
 
 COPY ["wujiErp.Model/","wujiErp.Model/"]
 COPY ["wujiErp.Web/","wujiErp.Web/"]
-WORKDIR "/publish/wujiErp.Web"
-RUN dotnet publish "wujiErp.Web.csproj" -c Release -o /publish/wuji
+WORKDIR "/wuji/wujiErp.Web"
+RUN dotnet publish "wujiErp.Web.csproj" -c Release -o /wuji/publish
 
-FROM node:lts-bullseye as build
+FROM node:16.17.0-alpine as build
 WORKDIR /wuji
 
 COPY ["wujiErp.React/","wujiErp.React/"]
@@ -22,7 +22,7 @@ EXPOSE 5210
 ENV ASPNETCORE_URLS=http://0.0.0.0:5210
 ENV TZ=Asia/Shanghai
 
-COPY --from=publish /publish/wuji .
-COPY --from=build /wuji/wujiErp.React/build ./wwwroot/Erp/Wuji/
+COPY --from=publish /wuji/publish .
+COPY --from=build /wuji/wujiErp.React/build ./wwwroot/
 RUN cp -rf /usr/share/zoneinfo/${TZ} /etc/localtime && echo "${TZ}" > /etc/timezone
 ENTRYPOINT ["dotnet", "wujiErp.Web.dll"]

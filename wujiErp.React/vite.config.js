@@ -15,7 +15,7 @@ export default ({ mode }) => {
       port: process.env.VITE_PORT || 7754
     },
     server: {
-      host: '0.0.0.0',
+      host: process.env.VITE_HOST || 'localhost',
       port: process.env.VITE_PORT || 7753
     }
   });
