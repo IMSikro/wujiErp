@@ -1,8 +1,10 @@
+using System.IO;
 using Furion;
 using Furion.DatabaseAccessor;
 using Mapster;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -52,14 +54,32 @@ public sealed class WujiStartup : AppStartup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+
+        app.UseRouting();
 
         app.UseCorsAccessor();
 
-        app.UseHttpsRedirection();
-
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseInject();
+        app.UseUnifyResultStatusCodes();
 
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+            endpoints.MapFallback(async (context) =>
+                {
+                    var phpath = Path.Join(env.WebRootPath, context.Request.Path);
+                    var name = Path.Combine(Path.GetDirectoryName(phpath)!, "index.html");
+                    if (File.Exists(name))
+                    {
+                        context.Response.StatusCode = 200;
+                        await context.Response.SendFileAsync(name);
+                    }
+                });
+        });
     }
 }

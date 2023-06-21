@@ -92,7 +92,7 @@
         {
             "label": "yarn: dev",
             "type": "shell",
-            "command": "yarn | yarn dev",
+            "command": "yarn && yarn dev",
             "options": {
                 "cwd": "wujiErp.React"
             }
@@ -108,7 +108,7 @@
         {
             "label": "yarn: copy",
             "type": "shell",
-            "command": "cp -r -fo ./build/* ${workspaceFolder}/wujiErp.Web/wwwroot/Erp/Wuji/",
+            "command": "cp -r -fo ./build/* ${workspaceFolder}/wujiErp.Web/wwwroot/",
             "options": {
                 "cwd": "wujiErp.React"
             }
@@ -116,7 +116,7 @@
         {
             "label": "yarn: build&copy",
             "type": "shell",
-            "command": "yarn && yarn build && cp -r -fo ./build/* ${workspaceFolder}/wujiErp.Web/publish/wuji/wwwroot/Erp/Wuji/",
+            "command": "yarn && yarn build && cp -r -fo ./build/* ${workspaceFolder}/wujiErp.Web/publish/wuji/wwwroot/",
             "options": {
                 "cwd": "wujiErp.React"
             }
