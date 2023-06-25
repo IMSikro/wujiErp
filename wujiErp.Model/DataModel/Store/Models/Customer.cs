@@ -47,15 +47,6 @@ public class Customer : BaseEntity, IEntitySeedData<Customer>
     /// </summary>
     public DateTime? LastOrderTime { get; set; }
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public Customer()
-    {
-        CreatedTime = DateTime.UtcNow;
-        IsDeleted = false;
-    }
-
     // 配置种子数据
     public IEnumerable<Customer> HasData(DbContext dbContext, Type dbContextLocator)
     {

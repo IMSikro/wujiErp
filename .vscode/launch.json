@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "./bin/Debug/net6.0/wujiErp.Web.dll",
+            "program": "./bin/Debug/net7.0/wujiErp.Web.dll",
             "args": [],
             "cwd": "wujiErp.Web",
             "stopAtEntry": false,

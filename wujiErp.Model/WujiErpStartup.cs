@@ -1,10 +1,12 @@
 using System.IO;
+using System.Linq;
 using Furion;
-using Furion.DatabaseAccessor;
+using Furion.DependencyInjection;
 using Mapster;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -54,6 +56,13 @@ public sealed class WujiStartup : AppStartup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        Scoped.Create((_, scope) =>
+        {
+            var context = scope.ServiceProvider.GetRequiredService<NpgsqlDbContext>();
+            if (context.Database.GetPendingMigrations().Any())
+                context.Database.Migrate();
+        });
+
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 

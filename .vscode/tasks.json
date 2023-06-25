@@ -35,7 +35,31 @@
         {
             "label": "dotnet_publish",
             "type": "shell",
-            "command": "rm -r -fo ./publish/wuji && dotnet publish wujiErp.Web.csproj -c Release -o publish/wuji/",
+            "command": "dotnet publish wujiErp.Web.csproj -r win-x64 --sc false -c Release -o ../wuji/publish/win64",
+            "options": {
+                "cwd": "wujiErp.Web"
+            }
+        },
+        {
+            "label": "dotnet_publish_linux_amd64",
+            "type": "shell",
+            "command": "dotnet publish wujiErp.Web.csproj -r linux-x64 --sc false -c Release -o ../wuji/publish/amd64",
+            "options": {
+                "cwd": "wujiErp.Web"
+            }
+        },
+        {
+            "label": "dotnet_publish_linux_arm",
+            "type": "shell",
+            "command": "dotnet publish wujiErp.Web.csproj -r linux-arm --sc false -c Release -o ../wuji/publish/arm",
+            "options": {
+                "cwd": "wujiErp.Web"
+            }
+        },
+        {
+            "label": "dotnet_publish_linux_arm64",
+            "type": "shell",
+            "command": "dotnet publish wujiErp.Web.csproj -r linux-arm64 --sc false -c Release -o ../wuji/publish/arm64",
             "options": {
                 "cwd": "wujiErp.Web"
             }

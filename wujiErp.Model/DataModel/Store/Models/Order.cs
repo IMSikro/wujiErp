@@ -96,13 +96,6 @@ public class Order : BaseEntity, IEntitySeedData<Order>
     /// </summary>
     public string Remark { get; set; }
 
-    public Order()
-    {
-        CreatedTime = DateTime.UtcNow;
-        IsDeleted = false;
-    }
-
-
     // 配置种子数据
     public IEnumerable<Order> HasData(DbContext dbContext, Type dbContextLocator)
     {

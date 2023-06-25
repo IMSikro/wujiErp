@@ -363,3 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 test/
 wujiErp.React/build/
+
+# yarn.lock
+*.lock

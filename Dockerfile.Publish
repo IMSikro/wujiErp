@@ -1,0 +1,52 @@
+# syntax=docker/dockerfile:1
+FROM mcr.microsoft.com/dotnet/aspnet:7.0.7-alpine3.18 AS base
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0.304-alpine3.18-amd64 AS build
+WORKDIR /wuji
+COPY ["wujiErp.Model/","wujiErp.Model/"]
+COPY ["wujiErp.ModelMigragions/","wujiErp.ModelMigragions/"]
+COPY ["wujiErp.Web/","wujiErp.Web/"]
+WORKDIR "/wuji/wujiErp.Web"
+RUN dotnet publish "wujiErp.Web.csproj" -r linux-x64 -c Release -o /wuji/publish/amd64
+RUN dotnet publish "wujiErp.Web.csproj" -r linux-arm -c Release -o /wuji/publish/arm
+RUN dotnet publish "wujiErp.Web.csproj" -r linux-arm64 -c Release -o /wuji/publish/arm64
+
+FROM node:16.17.0-alpine as react
+WORKDIR /wuji
+
+COPY ["wujiErp.React/","wujiErp.React/"]
+WORKDIR "/wuji/wujiErp.React"
+RUN yarn && yarn build
+# RUN npm i && npm run build
+
+FROM base AS final
+ARG TARGETPLATFORM
+WORKDIR /publish
+
+COPY --from=build /wuji/publish .
+
+WORKDIR /wuji
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] && \
+    then cp /publish/amd64/ . && \
+    fi \
+    && if [ "$TARGETPLATFORM" = "linux/arm64" ] && \
+    then cp /publish/arm64/ . && \
+    fi \
+    && if [ "$TARGETPLATFORM" = "linux/arm" ] && \
+    then cp /publish/arm/ . && \
+    fi && rm -rf /publish
+COPY --from=react /wuji/wujiErp.React/build ./wwwroot/
+
+ENV ASPNETCORE_URLS=http://0.0.0.0:5210
+ENV TZ=Asia/Shanghai
+
+# alpine镜像添加上海时区
+RUN apk --update add tzdata && \
+    cp /usr/share/zoneinfo/${TZ} /etc/localtime && \
+    echo "${TZ}" > /etc/timezone && \
+    apk del tzdata && \
+    rm -rf /var/cache/apk/*
+
+EXPOSE 5210
+
+ENTRYPOINT ["dotnet", "wujiErp.Web.dll"]

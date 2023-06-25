@@ -8,7 +8,7 @@ public abstract class BaseEntity : EntityBase
     /// <summary>
     /// 创建时间
     /// </summary>
-    public DateTime CreatedTime { get; set; }
+    public DateTime CreatedTime { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// 更新时间
@@ -19,7 +19,7 @@ public abstract class BaseEntity : EntityBase
     /// 是否删除
     /// <para>逻辑删除</para>
     /// </summary>
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; set; } = false;
 
     /// <summary>
     /// 删除时间

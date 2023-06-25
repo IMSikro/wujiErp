@@ -50,16 +50,6 @@ public class Produce : BaseEntity, IEntitySeedData<Produce>
     /// </summary>
     public string Remark { get; set; }
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public Produce()
-    {
-        CreatedTime = DateTime.UtcNow;
-        IsDeleted = false;
-    }
-
-
     // 配置种子数据
     public IEnumerable<Produce> HasData(DbContext dbContext, Type dbContextLocator)
     {
