@@ -3,6 +3,6 @@
     "ConnectionStrings": {
         "WujiSqliteConnString": "Data Source=./wujiErp.db",
         "WujiSqlServerConnString": "Data Source=sikro.tk,5433;User ID=sa;Password=Sikro.1993;Initial Catalog=WujiErp;MultipleActiveResultSets=True;Pooling=true;Min Pool Size=1;",
-        "WujiPostgreSQLConnString": "PORT=5040;DATABASE=WujiErp;HOST=sikro.tk;PASSWORD=post.gres#1993;USER ID=root;"
+        "WujiPostgreSQLConnString": "Server=sikro.tk;Port=5432;Database=WujiErp;User ID=root;Password=post.gres#1993;Integrated Security=true;Pooling=true;"
     }
 }
