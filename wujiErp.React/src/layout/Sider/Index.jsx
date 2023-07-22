@@ -23,12 +23,11 @@ function Sider() {
 
     const navigate = useNavigate();
 
-
-
     return (
         <Layout style={{ border: '1px solid var(--semi-color-border)' }}>
             <Sider style={{ backgroundColor: 'var(--semi-color-bg-1)' }}>
                 <Nav
+                    defaultIsCollapsed={true}
                     style={{ maxWidth: 220, height: '100%' }}
                     items={items}
                     selectedKeys={[itemkey]}
@@ -98,6 +97,5 @@ function Sider() {
         </Layout>
     )
 }
-
 
 export default Sider;
