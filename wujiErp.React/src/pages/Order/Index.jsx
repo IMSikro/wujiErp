@@ -210,13 +210,13 @@ class OrderTable extends Component {
                                 <Nav mode="horizontal">
                                     <Nav.Header>
                                         <Form.Input
-                                            field="OrderCode"
-                                            label="单号"
+                                            field="CustomerInfo"
+                                            label="姓名或手机号"
                                             trigger='blur'
                                         />
                                         <Form.Input
-                                            field="CustomerInfo"
-                                            label="姓名或手机号"
+                                            field="OrderCode"
+                                            label="单号"
                                             trigger='blur'
                                         />
                                         <Form.Input
