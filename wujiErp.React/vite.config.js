@@ -7,6 +7,9 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
     plugins: [react()],
+    define: {
+      __APP_ENV__: JSON.stringify(env.APP_ENV),
+    },
     base: './',
     build: {
       outDir: 'build'
@@ -17,9 +20,6 @@ export default defineConfig(({ mode }) => {
     server: {
       host: process.env.VITE_HOST || 'localhost',
       port: process.env.VITE_PORT || 7753
-    },
-    define: {
-      __APP_ENV__: JSON.stringify(env.APP_ENV),
-    },
-  };
+    }
+  }
 })

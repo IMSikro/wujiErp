@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
-FROM mcr.microsoft.com/dotnet/aspnet:7.0.7-alpine3.18 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0.10-alpine3.18 AS base
 
-FROM --platform=amd64 mcr.microsoft.com/dotnet/sdk:7.0.304-alpine3.18 AS build
+FROM --platform=amd64 mcr.microsoft.com/dotnet/sdk:7.0.400-bullseye-slim AS build
 WORKDIR /wuji
 COPY ["wujiErp.Model/","wujiErp.Model/"]
 COPY ["wujiErp.ModelMigragions/","wujiErp.ModelMigragions/"]
@@ -10,7 +10,7 @@ WORKDIR "/wuji/wujiErp.Web"
 # RUN dotnet publish "wujiErp.Web.csproj" -c Release -o /wuji/publish
 RUN dotnet publish "wujiErp.Web.csproj" -r linux-x64 --sc false -c Release -o /wuji/publish/amd64; dotnet publish "wujiErp.Web.csproj" -r linux-arm --sc false -c Release -o /wuji/publish/arm; dotnet publish "wujiErp.Web.csproj" -r linux-arm64 --sc false -c Release -o /wuji/publish/arm64
 
-FROM --platform=amd64 node:16.17.0-alpine as react
+FROM --platform=amd64 node:16.17.0-bullseye as react
 WORKDIR /wuji
 COPY wujiErp.React/package.json ./package.json
 RUN yarn 
